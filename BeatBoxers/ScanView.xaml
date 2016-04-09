@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="BeatBoxers.ScanView"
+	xmlns:controls="clr-namespace:BeatBoxers;assembly=BeatBoxers"
+	>
+	<ContentView.Resources>
+		<ResourceDictionary>
+	        <controls:InvertBoolenConverter x:Key="invertBool" />
+	    </ResourceDictionary>
+    </ContentView.Resources>
+
+	<ContentView.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="50" />
+			</Grid.RowDefinitions>
+
+			<Label Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Text="BeatBoxer" />
+
+			<ListView Grid.Row="1" ItemsSource="{Binding Devices}" RowHeight="60" >
+				<ListView.ItemTemplate>
+	                <DataTemplate>
+	                    <ViewCell>
+		                    <Grid>
+		                    	<Grid.ColumnDefinitions>
+		                    		<ColumnDefinition Width="*" />
+		                    		<ColumnDefinition Width="*" />
+		                    		<ColumnDefinition Width="100" />
+		                    	</Grid.ColumnDefinitions>
+
+		                    	<Label Grid.Column="0" VerticalOptions="Center" Text="{Binding Name}" />
+
+		                    	<Label Grid.Column="1" VerticalOptions="Center" Text="{Binding UUID}" />
+
+		                    	<Button Grid.Column="2" BackgroundColor="Lime" Text="Connect" Command="{Binding ConnectCommand}" IsVisible="{Binding IsConnected, Converter={StaticResource invertBool}}"  />
+		                    </Grid>
+	                    </ViewCell>
+	                </DataTemplate>
+	            </ListView.ItemTemplate>
+			</ListView>
+
+			<Button Grid.Row="2" BackgroundColor="Silver" Text="Scan" Command="{Binding StartScanCommand}" IsVisible="{Binding IsScanning, Converter={StaticResource invertBool}}" />
+
+			<Button Grid.Row="2" BackgroundColor="Silver" Text="Stop" Command="{Binding StopScanCommand}" IsVisible="{Binding IsScanning}" />
+		</Grid>
+	</ContentView.Content>
+</ContentView>
